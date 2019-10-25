@@ -2,6 +2,7 @@ brick.SetColorMode(2,3);
 brick.ResetMotorAngle('C'); % Resets motor angle to properly lower and raise forklift.
 
 while brick.ColorCode(3) ~= 3 % Navigate through maze until the color Green is detected.
+    pause(0.1);
     navigateMaze();
 end
 
@@ -16,6 +17,7 @@ When green is detected:
 %}
 
 while brick.ColorCode(3) ~= 4
+    pause(0.1);
     navigateMaze();
 end
 
@@ -27,6 +29,7 @@ When yellow is detected:
 %}
 
 while brick.ColorCode(3) ~= 2
+    pause(0.1);
     navigateMaze();
 end
 
@@ -40,16 +43,16 @@ function navigateMaze()
     brick.GyroCalibrate(2); % Calibrate car's position for accurate turning.
 
     if brick.ColorCode(2) == 5 % Stop the car at a red strip for 3 seconds.
-        brick.StopMotor('AB', 'Brake');
+        brick.StopMotor('AD', 'Brake');
         pause(3);
         while brick.ColorCode(2) == 5 % Move car forward until the red strip is not detected.
-            brick.MoveMotor('AB', 25);
+            brick.MoveMotor('AD', -50);
         end
     end        
     
     if brick.UltrasonicDist(1) > 10 % Turn car right when a major distance to the right is detected.
         while mod(brick.GyroAngle(2),90) ~= 0 % Car continues turning until the car is facing 90 degrees from its original position.
-            brick.MoveMotor('B', 50);
+            brick.MoveMotor('D', 50);
             brick.StopMotor('A', 'Coast');
             % brick.MoveMotor('A', 5); << This might be better.
         end
@@ -81,7 +84,31 @@ function navigateMaze()
         pause(0.3);
     end
     
-    brick.MoveMotor('AB', 50);
-    % pause(1); Might wanna add this.
+    brick.MoveMotor('DA', -50); % move forward
     
+end
+
+function turnLeft()
+    while mod(brick.GyroAngle(2),90) ~= 0 
+        brick.MoveMotor('D', -50);
+        brick.MoveMotor('A', 0);
+    end
+end
+
+function turnRight()
+    while mod(brick.GyroAngle(2),90) ~= 0 
+        brick.MoveMotor('A', -50);
+        brick.MoveMotor('D', 0);
+    end
+end
+
+function complete180()
+    while mod(brick.GyroAngle(2),180) ~= 0 
+        brick.MoveMotor('A', -50);
+        brick.MoveMotor('D', 0);
+    end
+end
+
+function reverse()
+
 end
