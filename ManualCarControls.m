@@ -1,7 +1,7 @@
 global key
 InitKeyboard();
 
-brick.SetColorMode(2,3);
+brick.SetColorMode(1,2);
 brick.GyroCalibrate(2);
 brick.ResetMotorAngle('C'); % Resets motor angle to properly lower and raise forklift.
 
@@ -37,7 +37,7 @@ while exit == false
             case 'r' % Press [R] to display rotation of vehicle relative to its initial position.
                 display(brick.GyroAngle(2));
             case 'f' % Press [F] to display color below vehicle.
-                color = brick.ColorCode(3);
+                color = brick.ColorCode(1);
                 switch color
                     case 0
                         disp('Unknown Color');

@@ -3,22 +3,22 @@ brick.ResetMotorAngle('C'); % Resets motor angle to properly lower and raise for
 InitKeyboard();
 pause(0.1);
 
-t = timer('ExecutionMode', 'fixedSpacing','Period', 0.001, 'TimerFcn', @keyboardCallback);
+t = timer('ExecutionMode', 'fixedSpacing','Period', 0.001, 'TimerFcn', {@keyboardCallback, brick});
 start(t);
 
 
-function keyboardCallback(obj, event)
+function keyboardCallback(obj, event, brick)
     global key
     switch key
         case 'w' % Hold [W] to move forwards.
-            brick.MoveMotor('AD', -100);
+            brick.MoveMotor('AD', -50);
         case 's' % Hold [S] to move backwards.
-            brick.MoveMotor('AD', 100);
+            brick.MoveMotor('AD', 50);
         case 'a' % Hold [A] to move right.
-            brick.MoveMotor('A', -100);
+            brick.MoveMotor('A', -50);
             brick.MoveMotor('D', 0);
         case 'd' % Hold [D] to move left.
-            brick.MoveMotor('D', -100);
+            brick.MoveMotor('D', -50);
             brick.MoveMotor('A', 0);
         case 0 % Press no keys to stop the vehicle.
             brick.StopMotor('AD', 'Coast');
