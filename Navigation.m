@@ -38,15 +38,15 @@ function navigateMaze(brick)
         
     elseif brick.TouchPressed(4) % Reverse the car for a bit and turn left when the front Touch Sensor is pressed.
         reverse(brick);
-        pause(2);
+        pause(1.5);
         turn90Left(brick);
         
     elseif brick.UltrasonicDist(2) > 24 && brick.UltrasonicDist(2) < 30
         turnRight(brick);
-        pause(0.3);
+        pause(0.2);
     elseif brick.UltrasonicDist(2) < 14
         turnLeft(brick);
-        pause(0.3);
+        pause(0.2);
     end
     
     %{
@@ -84,7 +84,7 @@ end
 
 function turn90Left(brick)
     turnLeft(brick);
-    pause(2.2);
+    pause(1.8);
     stop(brick);
 end
 
@@ -106,6 +106,6 @@ end
 
 function complete180(brick)
     turnRight(brick);
-    pause(3.7);
+    pause(3.15);
     stop(brick);
 end

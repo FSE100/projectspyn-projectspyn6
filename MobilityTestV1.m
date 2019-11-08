@@ -1,4 +1,4 @@
-brick.GyroCalibrate(3);
+ brick.GyroCalibrate(3);
 
 global key
 InitKeyboard();
