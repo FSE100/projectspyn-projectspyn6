@@ -21,29 +21,31 @@ CloseKeyboard();
 
 function navigateMaze(brick)
 
-    if brick.ColorCode(1) == 5 % Stop the car at a red strip for 3 seconds.
+    if brick.ColorCode(1) == 5 % Stop the car at a red strip for 2 seconds.
         stop(brick);
-        pause(3);
+        pause(2);
         while brick.ColorCode(1) == 5 % Move car forward until the red strip is not detected.
             pause(0.1);
-            moveFoward(brick);
+            moveForward(brick);
         end
-        
+    
+    
     elseif brick.UltrasonicDist(2) > 30 % Turn car right when a major distance to the right is detected.
         turn90Right(brick);
         moveForward(brick);
-        pause(0.5);
+        pause(2);
+        
         
     elseif brick.TouchPressed(4) % Reverse the car for a bit and turn left when the front Touch Sensor is pressed.
         reverse(brick);
-        pause(1);
+        pause(2);
         turn90Left(brick);
         
     elseif brick.UltrasonicDist(2) > 24 && brick.UltrasonicDist(2) < 30
-        turnLeft(brick);
+        turnRight(brick);
         pause(0.3);
     elseif brick.UltrasonicDist(2) < 14
-        turnRight(brick);
+        turnLeft(brick);
         pause(0.3);
     end
     
