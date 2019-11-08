@@ -67,69 +67,66 @@ function navigateMaze
         turn90Left();
     end
     
+    %{
     if mod(brick.GyroAngle(2),90) > 10 % If the car is 10 degrees off track, a right turn shall be conducted.
         turnLeft();
         pause(0.3);
     elseif mod(brick.GyroAngle(2),90) < -10
         turnRight();
         pause(0.3);
-        pause(0.3);
     end
+    %}
     
     moveForward();
     
 end
 
-function raiseRamp()
+function raiseRamp(brick)
     brick.MoveMotorAngleAbs('C', 10, 55, 'Brake');
 end
 
-function lowerRamp()
+function lowerRamp(brick)
    brick.MoveMotorAngleAbs('C', 10, 0, 'Brake');
 end
 
-function moveForward()
-    brick.MoveMotor('A', -60);
+function moveForward(brick)
+    brick.MoveMotor('A', -55);
     brick.MoveMotor('D', -50);
 end
 
-function reverse()
+function reverse(brick)
     brick.MoveMotor('A', 50);
-    brick.MoveMotor('D', 60);
+    brick.MoveMotor('D', 50);
 end
 
-function stop()
-    brick.StopMotor('AD', 'Cruise');
+function stop(brick)
+    brick.StopMotor('AD', 'Coast');
 end
 
-function turn90Left()
-    while mod(brick.GyroAngle(2),90) ~= 0 
-        brick.MoveMotor('D', -50);
-        brick.MoveMotor('A', 0);
-    end
+function turn90Left(brick)
+    turnLeft(brick);
+    pause(1.74);
+    stop(brick);
 end
 
-function turn90Right()
-    while mod(brick.GyroAngle(2),90) ~= 0 
-        brick.MoveMotor('A', -50);
-        brick.MoveMotor('D', 0);
-    end
-end
-
-function turnLeft()
+function turnLeft(brick)
     brick.MoveMotor('D', -50);
     brick.MoveMotor('A', 0);
 end
 
-function turnRight()
+function turn90Right(brick)
+    turnRight(brick);
+    pause(1.9);
+    stop(brick);
+end
+
+function turnRight(brick)
     brick.MoveMotor('A', -50);
     brick.MoveMotor('D', 0);
 end
 
-
-function complete180()
-    while mod(brick.GyroAngle(2),180) ~= 0 
-        brick.MoveMotor('A', -50);
-        brick.MoveMotor('D', 0);
-    end
+function complete180(brick)
+    turnLeft(brick);
+    pause(3.55);
+    stop(brick);
 end
