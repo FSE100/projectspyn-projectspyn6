@@ -4,6 +4,8 @@ brick.ResetMotorAngle('C'); % Resets motor angle to properly lower and raise ram
 global key
 InitKeyboard();
 
+% Hi.
+
 while true
     switch key
         case 0
