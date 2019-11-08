@@ -50,9 +50,9 @@ while 1
         case 'x' % Press [X] to display whether the color detected is yellow or green based on RGB input.
             brick.SetColorMode(1,4);
             rgb = brick.ColorRGB(1);
-            if rgb(1) >= 380 && rgb(1) <= 430 && rgb(2) >= 250 && rgb(2) <= 290
+            if rgb(1) >= 380 && rgb(1) <= 450 && rgb(2) >= 250 && rgb(2) <= 290
                 disp('Yellow')
-            elseif rgb(1) >= 15 && rgb(1) <= 50 && rgb(2) >= 40 && rgb(2) <= 110 && rgb(3) >= 20 && rgb(3) <= 110
+            elseif rgb(1) >= 15 && rgb(1) <= 60 && rgb(2) >= 40 && rgb(2) <= 115 && rgb(3) >= 20 && rgb(3) <= 110
                 disp('Green')
             else
                 disp('The color detected is neither yellow nor green.')
