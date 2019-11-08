@@ -4,8 +4,6 @@ brick.ResetMotorAngle('C'); % Resets motor angle to properly lower and raise ram
 global key
 InitKeyboard();
 
-% Hi.
-
 while true
     switch key
         case 0
@@ -41,7 +39,7 @@ function navigateMaze(brick)
         pause(1);
         turn90Left(brick);
         
-    elseif brick.UltrasonicDist(2) > 24 && brick.UltrasonicDist(2) < 25qqqq
+    elseif brick.UltrasonicDist(2) > 24 && brick.UltrasonicDist(2) < 30
         turnLeft(brick);
         pause(0.3);
     elseif brick.UltrasonicDist(2) < 14
