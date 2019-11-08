@@ -4,21 +4,21 @@ brick.GyroCalibate(2); % Calibrate car's position for accurate turning.
 
 while brick.ColorCode(3) ~= 3 % Navigate through maze until the color Green is detected.
     pause(0.1);
-    navigateMaze();
+    navigateMaze(brick);
 end
 
 greenAction(); % Pick up passenger.
 
 while brick.ColorCode(3) ~= 4 % Navigate through maze until the color Yellow is detected.
     pause(0.1);
-    navigateMaze();
+    navigateMaze(brick);
 end
 
 yellowAction(); % Drop off passenger.
 
 while brick.ColorCode(3) ~= 2 % Navigate through maze until the color Blue is detected.
     pause(0.1);
-    navigateMaze();
+    navigateMaze(brick);
 end
 
 blueAction(); % Park.
@@ -46,25 +46,33 @@ function blueAction
     pause(1);
 end
 
-function navigateMaze
+function navigateMaze(brick)
 
     if brick.ColorCode(2) == 5 % Stop the car at a red strip for 3 seconds.
-        stop();
+        stop(brick);
         pause(3);
         while brick.ColorCode(1) == 5 % Move car forward until the red strip is not detected.
             pause(0.1);
-            moveFoward();
+            moveFoward(brick);
         end
     end        
     
-    if brick.UltrasonicDist(1) > 10 % Turn car right when a major distance to the right is detected.
-        turn90Right();
+    if brick.UltrasonicDist(2) > 70 % Turn car right when a major distance to the right is detected.
+        turn90Right(brick);
     end
     
     if brick.TouchPressed(4) % Reverse the car for a bit and turn left when the front Touch Sensor is pressed.
-        reverse();
+        reverse(brick);
         pause(1);
-        turn90Left();
+        turn90Left(brick);
+    end
+    
+    if brick.UltrasonicDist(2) > 23
+        turnLeft(brick);
+        pause(0.3);
+    elseif brick.UltrasonicDist(2) < 15
+        turnRight(brick);
+        pause(0.3);
     end
     
     %{
@@ -77,7 +85,7 @@ function navigateMaze
     end
     %}
     
-    moveForward();
+    moveForward(brick);
     
 end
 
