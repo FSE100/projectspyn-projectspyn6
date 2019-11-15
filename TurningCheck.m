@@ -1,13 +1,9 @@
-brick.GyroCalibrate(3); % Calibrate car's position for accurate turning.
-brick.GyroAngle(3);
-
-gyroTurn90Left(brick);
-%timeTurn90Left(brick);
-%timeTurn90Right(brick);
+%turn90Left(brick);
+%turn90Right(brick);
 %complete180(brick);
 
 function moveForward(brick)
-    brick.MoveMotor('A', -55);
+    brick.MoveMotor('A', -51);
     brick.MoveMotor('D', -50);
 end
 
@@ -15,22 +11,10 @@ function stop(brick)
     brick.StopMotor('AD', 'Coast');
 end
 
-function gyroTurn90Left(brick)
-    turnLeft(brick);
-    pause(1.5);
-    stop(brick);
-    angle = brick.GyroAngle(3);
-    disp(angle);
-    while mod(angle, 90) < -1 && mod(angle, 90) > 1
-        turnLeft(brick);
-    end
-    stop(brick);
-end
 
-
-function timeTurn90Left(brick)
+function turn90Left(brick)
     turnLeft(brick);
-    pause(1.8);
+    pause(1.75);
     stop(brick);
 end
 
@@ -39,7 +23,7 @@ function turnLeft(brick)
     brick.MoveMotor('D', 0);
 end
 
-function timeTurn90Right(brick)
+function turn90Right(brick)
     turnRight(brick);
     pause(1.62);
     stop(brick);
@@ -52,6 +36,6 @@ end
 
 function complete180(brick)
     turnRight(brick);
-    pause(3.15);
+    pause(3.22);
     stop(brick);
 end

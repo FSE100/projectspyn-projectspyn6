@@ -22,17 +22,17 @@ function navigateMaze(brick)
 
     if brick.ColorCode(1) == 5 % Stop the car at a red strip for 2 seconds.
         stop(brick);
-        pause(2);
+        pause(3);
         while brick.ColorCode(1) == 5 % Move car forward until the red strip is not detected.
             pause(0.1);
             moveForward(brick);
         end
     
     
-    elseif brick.UltrasonicDist(2) > 30 % Turn car right when a major distance to the right is detected.
+    elseif brick.UltrasonicDist(2) >= 50 % Turn car right when a major distance to the right is detected.
         turn90Right(brick);
         moveForward(brick);
-        pause(2.5);
+        pause(2);
         
         
     elseif brick.TouchPressed(4) % Reverse the car for a bit and turn left when the front Touch Sensor is pressed.
@@ -40,9 +40,9 @@ function navigateMaze(brick)
         pause(1.5);
         turn90Left(brick);
         
-    elseif brick.UltrasonicDist(2) > 24 && brick.UltrasonicDist(2) < 30
+    elseif brick.UltrasonicDist(2) > 26.8 && brick.UltrasonicDist(2) < 50
         straightenRight(brick);
-    elseif brick.UltrasonicDist(2) < 14
+    elseif brick.UltrasonicDist(2) < 10
         straightenLeft(brick);
     end
 
@@ -81,36 +81,65 @@ function lowerRamp(brick)
 end
 
 function moveForward(brick)
-    brick.MoveMotor('A', -55);
+    brick.MoveMotor('A', -51);
     brick.MoveMotor('D', -50);
 end
 
 function reverse(brick)
     brick.MoveMotor('A', 50);
-    brick.MoveMotor('D', 50);
+    brick.MoveMotor('D', 55);
 end
 
 function stop(brick)
     brick.StopMotor('AD', 'Coast');
 end
 
+%{
 function straightenLeft(brick)
     turnLeft(brick);
     pause(0.2);
     moveForward(brick);
+    pause(0.6);
+end
+%}
+
+
+function straightenLeft(brick)
+    reverse(brick);
+    pause(0.3);
+    turnLeft(brick);
+    pause(0.3);
+    moveForward(brick);
+    pause(0.4);
+    turnRight(brick);
     pause(0.2);
 end
 
+%{
 function straightenRight(brick)
     turnRight(brick);
     pause(0.2);
     moveForward(brick);
+    pause(0.6);
+end
+%}
+
+
+function straightenRight(brick)
+    reverse(brick);
+    pause(0.3);
+    turnRight(brick);
+    pause(0.3);
+    moveForward(brick);
+    pause(0.4);
+    turnLeft(brick);
     pause(0.2);
 end
 
+
 function turn90Left(brick)
     turnLeft(brick);
-    pause(1.8);
+    pause(1.9);
     stop(brick);
 end
 
@@ -132,6 +161,6 @@ end
 
 function complete180(brick)
     turnRight(brick);
-    pause(3.15);
+    pause(3.22);
     stop(brick);
 end
