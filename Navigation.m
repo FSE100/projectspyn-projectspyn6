@@ -9,7 +9,6 @@ while true
         case 0
             moveForward(brick);
             pause(0.1);
-            disp(brick.UltrasonicDist(2))
             navigateMaze(brick);
         case 'q'
             stop(brick);
@@ -33,7 +32,7 @@ function navigateMaze(brick)
     elseif brick.UltrasonicDist(2) > 30 % Turn car right when a major distance to the right is detected.
         turn90Right(brick);
         moveForward(brick);
-        pause(2);
+        pause(2.5);
         
         
     elseif brick.TouchPressed(4) % Reverse the car for a bit and turn left when the front Touch Sensor is pressed.
@@ -42,22 +41,35 @@ function navigateMaze(brick)
         turn90Left(brick);
         
     elseif brick.UltrasonicDist(2) > 24 && brick.UltrasonicDist(2) < 30
-        turnRight(brick);
-        pause(0.2);
+        straightenRight(brick);
     elseif brick.UltrasonicDist(2) < 14
-        turnLeft(brick);
-        pause(0.2);
+        straightenLeft(brick);
     end
-    
-    %{
-    if mod(brick.GyroAngle(2),90) > 10 % If the car is 10 degrees off track, a right turn shall be conducted.
-        turnLeft();
-        pause(0.3);
-    elseif mod(brick.GyroAngle(2),90) < -10
-        turnRight();
-        pause(0.3);
-    end
-    %}   
+
+end
+
+function greenAction(brick) % Pick-up
+    complete180(brick);
+    reverse(brick);
+    pause(1);
+    stop(brick);
+    raiseRamp(brick);
+end
+
+function yellowAction(brick) % Drop-off
+    moveForward(brick);
+    pause(0.5);
+    stop(brick);
+    lowerRamp(brick);
+    moveForward(brick);
+    pause(0.5);
+    stop(brick);
+end
+
+function blueAction(brick) % Parking
+    moveForward(brick);
+    pause(1);
+    stop(brick);
 end
 
 function raiseRamp(brick)
@@ -80,6 +92,20 @@ end
 
 function stop(brick)
     brick.StopMotor('AD', 'Coast');
+end
+
+function straightenLeft(brick)
+    turnLeft(brick);
+    pause(0.2);
+    moveForward(brick);
+    pause(0.2);
+end
+
+function straightenRight(brick)
+    turnRight(brick);
+    pause(0.2);
+    moveForward(brick);
+    pause(0.2);
 end
 
 function turn90Left(brick)
