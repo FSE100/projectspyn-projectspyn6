@@ -1,6 +1,9 @@
 %turn90Left(brick);
 %turn90Right(brick);
-%complete180(brick);
+%omplete180(brick);
+straightenRight(brick);
+stop(brick);
+%straightenRight(brick);
 
 function moveForward(brick)
     brick.MoveMotor('A', -53);
@@ -14,7 +17,7 @@ end
 
 function turn90Left(brick)
     turnLeft(brick);
-    pause(1.75);
+    pause(2.6);
     stop(brick);
 end
 
@@ -25,7 +28,7 @@ end
 
 function turn90Right(brick)
     turnRight(brick);
-    pause(1.62);
+    pause(2.1);
     stop(brick);
 end
 
@@ -36,6 +39,29 @@ end
 
 function complete180(brick)
     turnRight(brick);
-    pause(3.22);
+    pause(4);
     stop(brick);
+end
+
+function straightenLeft(brick)
+    reverse(brick);
+    pause(0.3);
+    turnLeft(brick);
+    pause(0.3);
+    moveForward(brick);
+    pause(0.4);
+end
+
+function straightenRight(brick)
+    reverse(brick);
+    pause(0.3);
+    turnRight(brick);
+    pause(0.3);
+    moveForward(brick);
+    pause(0.4);
+end
+
+function reverse(brick)
+    brick.MoveMotor('A', 50);
+    brick.MoveMotor('D', 50);
 end
