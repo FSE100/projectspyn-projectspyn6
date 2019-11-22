@@ -3,36 +3,41 @@ brick.ResetMotorAngle('C'); % Resets motor angle to properly lower and raise ram
 global key
 InitKeyboard();
 
-while ~(isGreen(brick)) % Navigate through maze until the color Green is detected.
+while isGreen(brick) == 0 % Navigate through maze until the color Green is detected.
     switch key
         case 0
             moveForward(brick);
             pause(0.1);
             navigateMaze(brick);
         case 'm'
-            manualControls(brick, key);
+            manualControls(brick);
+            CloseKeyboard();
+            InitKeyboard();
     end
 end
 
 % Pick up passenger.
 %greenAction();
-manualControls(brick, key);
+manualControls(brick);
+CloseKeyboard();
+InitKeyboard();
 
-while ~(isYellow(brick)) % Navigate through maze until the color Yellow is detected.
+while isYellow(brick) == 0 % Navigate through maze until the color Yellow is detected.
     switch key
         case 0
             moveForward(brick);
             pause(0.1);
             navigateMaze(brick);
         case 'm'
-            manualControls(brick, key);
+            manualControls(brick);
+            CloseKeyboard();
+            InitKeyboard();
     end
 end
 
 % Drop off passenger.
 %yellowAction(brick);
-manualControls(brick, key);
-
+manualControls(brick);
 CloseKeyboard();
 % End of program.
 
@@ -42,9 +47,9 @@ function result = isGreen(brick)
     brick.SetColorMode(1,4);
     rgb = brick.ColorRGB(1);
     if rgb(1) >= 15 && rgb(1) <= 60 && rgb(2) >= 40 && rgb(2) <= 115 && rgb(3) >= 20 && rgb(3) <= 110
-        result = true;
+        result = 1;
     else
-        result = false;
+        result = 0;
     end
 end
 
@@ -52,9 +57,9 @@ function result = isYellow(brick)
     brick.SetColorMode(1,4);
     rgb = brick.ColorRGB(1);
     if rgb(1) >= 270 && rgb(1) <= 315 && rgb(2) >= 163 && rgb(2) <= 195 && rgb(3) >= 74 && rgb(3) <= 86
-        result = true;
+        result = 1;
     else
-        result = false;
+        result = 0;
     end
 end
 
@@ -73,7 +78,8 @@ function yellowAction(brick)
     raiseRamp(brick);
 end
 
-function manualControls(brick, key)
+function manualControls(brick)
+    global key
     while 1
         pause(0.1);
         switch key
@@ -110,13 +116,8 @@ end
 
 function navigateMaze(brick)
     checkForStop(brick);
-    
-    if brick.UltrasonicDist(2) >= 65 % Turn car right when a major distance to the right is detected.
-        turn90Right(brick);
-        moveForward(brick);
-        pause(2);    
-    
-    elseif brick.TouchPressed(4) % Reverse the car for a bit and turn left when the front Touch Sensor is pressed.
+       
+    if brick.TouchPressed(4) % Reverse the car for a bit and turn left when the front Touch Sensor is pressed.
         reverse(brick);
         pause(1.2);
         turn90Left(brick);
@@ -129,16 +130,20 @@ function navigateMaze(brick)
     elseif brick.UltrasonicDist(2) >= 65 % Turn car right when a major distance to the right is detected.
         turn90Right(brick);
         moveForward(brick);
+        pause(2); 
+        
+    elseif brick.UltrasonicDist(2) >= 65 % Turn car right when a major distance to the right is detected.
+        turn90Right(brick);
+        moveForward(brick);
         pause(2);
         
-    elseif brick.UltrasonicDist(2) > 24.1 && brick.UltrasonicDist(2) < 65
+    elseif brick.UltrasonicDist(2) > 25.5 && brick.UltrasonicDist(2) < 65
         checkForStop(brick);
         straightenRight(brick);
-    elseif brick.UltrasonicDist(2) < 14.9
+    elseif brick.UltrasonicDist(2) < 13.5
         checkForStop(brick);
         straightenLeft(brick);
     end
-
 end
 
 function checkForStop(brick)
@@ -161,7 +166,7 @@ function lowerRamp(brick)
 end
 
 function moveForward(brick)
-    brick.MoveMotor('A', -55);
+    brick.MoveMotor('A', -54);
     brick.MoveMotor('D', -50);
 end
 
@@ -216,7 +221,7 @@ end
 
 function turn90Right(brick)
     turnRight(brick);
-    pause(2.1);
+    pause(1.7);
     stop(brick);
 end
 
