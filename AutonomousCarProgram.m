@@ -1,55 +1,117 @@
-brick.SetColorMode(1,2); % Color sensor shall return basic colors.
 brick.ResetMotorAngle('C'); % Resets motor angle to properly lower and raise ramp.
-brick.GyroCalibate(2); % Calibrate car's position for accurate turning.
 
-while brick.ColorCode(3) ~= 3 % Navigate through maze until the color Green is detected.
-    pause(0.1);
-    navigateMaze(brick);
+global key
+InitKeyboard();
+
+while ~(isGreen(brick)) % Navigate through maze until the color Green is detected.
+    switch key
+        case 0
+            moveForward(brick);
+            pause(0.1);
+            navigateMaze(brick);
+        case 'm'
+            manualControls(brick, key);
+    end
 end
 
-%greenAction(); % Pick up passenger.
-ManualCarControls;
+% Pick up passenger.
+%greenAction();
+manualControls(brick, key);
 
-while brick.ColorCode(3) ~= 4 % Navigate through maze until the color Yellow is detected.
-    pause(0.1);
-    navigateMaze(brick);
+while ~(isYellow(brick)) % Navigate through maze until the color Yellow is detected.
+    switch key
+        case 0
+            moveForward(brick);
+            pause(0.1);
+            navigateMaze(brick);
+        case 'm'
+            manualControls(brick, key);
+    end
 end
 
-%yellowAction(); % Drop off passenger.
-ManualCarControls;
+% Drop off passenger.
+yellowAction(brick);
 stop(brick);
 
+CloseKeyboard();
 % End of program.
 
-% Functions defined below.
 
-function greenAction
-    complete180();
-    lowerRamp();
-    reverse();
-    pause(1);
-    raiseRamp();
+% Functions defined below.
+function result = isGreen(brick)
+    brick.SetColorMode(1,4);
+    rgb = brick.ColorRGB(1);
+    if rgb(1) >= 15 && rgb(1) <= 60 && rgb(2) >= 40 && rgb(2) <= 115 && rgb(3) >= 20 && rgb(3) <= 110
+        result = true;
+    else
+        result = false;
+    end
 end
 
-function yellowAction
-    lowerRamp();
-    moveForward();
+function result = isYellow(brick)
+    brick.SetColorMode(1,4);
+    rgb = brick.ColorRGB(1);
+    if rgb(1) >= 270 && rgb(1) <= 315 && rgb(2) >= 163 && rgb(2) <= 195 && rgb(3) >= 74 && rgb(3) <= 86
+        result = true;
+    else
+        result = false;
+    end
+end
+
+function greenAction(brick)
+    complete180(brick);
+    lowerRamp(brick);
+    reverse(brick);
     pause(1);
-    raiseRamp();
+    raiseRamp(brick);
+end
+
+function yellowAction(brick)
+    lowerRamp(brick);
+    moveForward(brick);
+    pause(1);
+    raiseRamp(brick);
+end
+
+function manualControls(brick, key)
+    while 1
+        pause(0.1);
+        switch key
+            case 'w' % Hold [W] to move forwards.
+                brick.MoveMotor('A', -55);
+                brick.MoveMotor('D', -50);
+
+            case 's' % Hold [S] to move backwards.
+                brick.MoveMotor('A', 50);
+                brick.MoveMotor('D', 50);
+
+            case 'a' % Hold [A] to move right.
+                brick.MoveMotor('A', -50);
+                brick.MoveMotor('D', 0);
+
+            case 'd' % Hold [D] to move left.
+                brick.MoveMotor('D', -50);
+                brick.MoveMotor('A', 0);
+
+            case 'r' % Press [R] to raise ramp.
+                brick.MoveMotorAngleRel('C', 10, 55, 'Brake');
+
+            case 'f' % Press [F] to lower ramp.
+                brick.MoveMotorAngleRel('C', 10, -55, 'Brake');
+
+            case 0 % Press no keys to stop the vehicle.
+                brick.StopMotor('AD', 'Coast');
+
+            case 'q'
+                break; % Press [Q] to exit the program.
+        end   
+    end
 end
 
 function navigateMaze(brick)
-
-    if brick.ColorCode(1) == 5 % Stop the car at a red strip for 2 seconds.
-        stop(brick);
-        pause(3);
-        while brick.ColorCode(1) == 5 % Move car forward until the red strip is not detected.
-            pause(0.1);
-            moveForward(brick);
-        end
+    checkForStop(brick);
     
-    
-    elseif brick.UltrasonicDist(2) >= 74 % Turn car right when a major distance to the right is detected.
+    if brick.UltrasonicDist(2) >= 74 % Turn car right when a major distance to the right is detected.
         turn90Right(brick);
         moveForward(brick);
         pause(2);
@@ -71,6 +133,18 @@ function navigateMaze(brick)
         straightenLeft(brick);
     end
 
+end
+
+function checkForStop(brick)
+    brick.SetColorMode(1,2); % Color sensor shall return basic colors.
+    if brick.ColorCode(1) == 5 % Stop the car at a red strip for 2.5 seconds.
+        stop(brick);
+        pause(2.5);
+        while brick.ColorCode(1) == 5 % Move car forward until the red strip is not detected.
+            pause(0.1);
+            moveForward(brick);
+        end
+    end
 end
 
 function raiseRamp(brick)
@@ -95,16 +169,6 @@ function stop(brick)
     brick.StopMotor('AD', 'Coast');
 end
 
-%{
-function straightenLeft(brick)
-    turnLeft(brick);
-    pause(0.2);
-    moveForward(brick);
-    pause(0.6);
-end
-%}
-
-
 function straightenLeft(brick)
     reverse(brick);
     pause(0.5);
@@ -113,37 +177,6 @@ function straightenLeft(brick)
     moveForward(brick);
     pause(0.5);
 end
-
-%{
-function straightenLeft(brick)
-    reverse(brick);
-    pause(0.3);
-    turnLeft(brick);
-    pause(0.3);
-    moveForward(brick);
-    pause(0.5);
-end
-%}
-
-%{
-function straightenRight(brick)
-    turnRight(brick);
-    pause(0.2);
-    moveForward(brick);
-    pause(0.6);
-end
-%}
-
-%{
-function straightenRight(brick)
-    reverse(brick);
-    pause(0.3);
-    turnRight(brick);
-    pause(0.3);
-    moveForward(brick);
-    pause(0.5);
-end
-%}
 
 function straightenRight(brick)
     reverse(brick);
