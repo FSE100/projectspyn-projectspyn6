@@ -30,8 +30,8 @@ while ~(isYellow(brick)) % Navigate through maze until the color Yellow is detec
 end
 
 % Drop off passenger.
-yellowAction(brick);
-stop(brick);
+%yellowAction(brick);
+manualControls(brick, key);
 
 CloseKeyboard();
 % End of program.
@@ -111,12 +111,11 @@ end
 function navigateMaze(brick)
     checkForStop(brick);
     
-    if brick.UltrasonicDist(2) >= 74 % Turn car right when a major distance to the right is detected.
+    if brick.UltrasonicDist(2) >= 65 % Turn car right when a major distance to the right is detected.
         turn90Right(brick);
         moveForward(brick);
-        pause(2);
-        
-        
+        pause(2);    
+    
     elseif brick.TouchPressed(4) % Reverse the car for a bit and turn left when the front Touch Sensor is pressed.
         reverse(brick);
         pause(1.2);
@@ -127,16 +126,22 @@ function navigateMaze(brick)
             deadEndTurn(brick);
         end
         
-    elseif brick.UltrasonicDist(2) > 24.1 && brick.UltrasonicDist(2) < 74
+    elseif brick.UltrasonicDist(2) >= 65 % Turn car right when a major distance to the right is detected.
+        turn90Right(brick);
+        moveForward(brick);
+        pause(2);
+        
+    elseif brick.UltrasonicDist(2) > 24.1 && brick.UltrasonicDist(2) < 65
+        checkForStop(brick);
         straightenRight(brick);
     elseif brick.UltrasonicDist(2) < 14.9
+        checkForStop(brick);
         straightenLeft(brick);
     end
 
 end
 
 function checkForStop(brick)
-    brick.SetColorMode(1,2); % Color sensor shall return basic colors.
     if brick.ColorCode(1) == 5 % Stop the car at a red strip for 2.5 seconds.
         stop(brick);
         pause(2.5);
@@ -171,20 +176,20 @@ end
 
 function straightenLeft(brick)
     reverse(brick);
-    pause(0.5);
+    pause(0.7);
     turnLeft(brick);
     pause(0.3);
     moveForward(brick);
-    pause(0.5);
+    pause(0.7);
 end
 
 function straightenRight(brick)
     reverse(brick);
-    pause(0.5);
+    pause(0.7);
     turnRight(brick);
     pause(0.3);
     moveForward(brick);
-    pause(0.5);
+    pause(0.7);
 end
 
 function deadEndTurn(brick)
@@ -200,7 +205,7 @@ end
 
 function turn90Left(brick)
     turnLeft(brick);
-    pause(2.3);
+    pause(2);
     stop(brick);
 end
 
