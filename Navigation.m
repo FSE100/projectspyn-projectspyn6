@@ -18,6 +18,7 @@ end
 
 CloseKeyboard();
 
+
 function navigateMaze(brick)
 
     if brick.ColorCode(1) == 5 % Stop the car at a red strip for 2 seconds.
@@ -29,7 +30,7 @@ function navigateMaze(brick)
         end
     
     
-    elseif brick.UltrasonicDist(2) >= 50 % Turn car right when a major distance to the right is detected.
+    elseif brick.UltrasonicDist(2) >= 70 % Turn car right when a major distance to the right is detected.
         turn90Right(brick);
         moveForward(brick);
         pause(2);
@@ -40,36 +41,12 @@ function navigateMaze(brick)
         pause(1.5);
         turn90Left(brick);
         
-    elseif brick.UltrasonicDist(2) > 26.8 && brick.UltrasonicDist(2) < 50
+    elseif brick.UltrasonicDist(2) > 24.1 && brick.UltrasonicDist(2) < 70
         straightenRight(brick);
-    elseif brick.UltrasonicDist(2) < 10
+    elseif brick.UltrasonicDist(2) < 14.9
         straightenLeft(brick);
     end
 
-end
-
-function greenAction(brick) % Pick-up
-    complete180(brick);
-    reverse(brick);
-    pause(1);
-    stop(brick);
-    raiseRamp(brick);
-end
-
-function yellowAction(brick) % Drop-off
-    moveForward(brick);
-    pause(0.5);
-    stop(brick);
-    lowerRamp(brick);
-    moveForward(brick);
-    pause(0.5);
-    stop(brick);
-end
-
-function blueAction(brick) % Parking
-    moveForward(brick);
-    pause(1);
-    stop(brick);
 end
 
 function raiseRamp(brick)
@@ -81,7 +58,7 @@ function lowerRamp(brick)
 end
 
 function moveForward(brick)
-    brick.MoveMotor('A', -51);
+    brick.MoveMotor('A', -53);
     brick.MoveMotor('D', -50);
 end
 
@@ -139,7 +116,7 @@ end
 
 function turn90Left(brick)
     turnLeft(brick);
-    pause(1.9);
+    pause(1.75);
     stop(brick);
 end
 
@@ -150,7 +127,7 @@ end
 
 function turn90Right(brick)
     turnRight(brick);
-    pause(1.8);
+    pause(1.62);
     stop(brick);
 end
 

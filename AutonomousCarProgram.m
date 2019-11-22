@@ -7,14 +7,16 @@ while brick.ColorCode(3) ~= 3 % Navigate through maze until the color Green is d
     navigateMaze(brick);
 end
 
-greenAction(); % Pick up passenger.
+%greenAction(); % Pick up passenger.
+ManualCarControls;
 
 while brick.ColorCode(3) ~= 4 % Navigate through maze until the color Yellow is detected.
     pause(0.1);
     navigateMaze(brick);
 end
 
-yellowAction(); % Drop off passenger.
+%yellowAction(); % Drop off passenger.
+ManualCarControls;
 
 while brick.ColorCode(3) ~= 2 % Navigate through maze until the color Blue is detected.
     pause(0.1);

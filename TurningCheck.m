@@ -3,7 +3,7 @@
 %complete180(brick);
 
 function moveForward(brick)
-    brick.MoveMotor('A', -51);
+    brick.MoveMotor('A', -53);
     brick.MoveMotor('D', -50);
 end
 

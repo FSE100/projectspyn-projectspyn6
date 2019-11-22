@@ -7,21 +7,27 @@ while 1
     pause(0.1);
     switch key
         case 'w' % Hold [W] to move forwards.
-            brick.MoveMotor('A', -51);
+            brick.MoveMotor('A', -53);
             brick.MoveMotor('D', -50);
+            
         case 's' % Hold [S] to move backwards.
             brick.MoveMotor('A', 50);
             brick.MoveMotor('D', 55);
+            
         case 'a' % Hold [A] to move right.
             brick.MoveMotor('A', -50);
             brick.MoveMotor('D', 0);
+            
         case 'd' % Hold [D] to move left.
             brick.MoveMotor('D', -50);
             brick.MoveMotor('A', 0);
+            
         case 'r' % Press [R] to raise ramp.
             brick.MoveMotorAngleRel('C', 10, 55, 'Brake');
+            
         case 'f' % Press [F] to lower ramp.
             brick.MoveMotorAngleRel('C', 10, -55, 'Brake');
+            
         case 'e' % Press [E] to display color below vehicle.
             brick.SetColorMode(1, 2);
             color = brick.ColorCode(1);
@@ -43,10 +49,12 @@ while 1
                 case 7
                     disp('Brown');
             end
+            
         case 'g' % Press [G] to display Red, Green & Blue RGB values.
             brick.SetColorMode(1, 4);
             rgb = brick.ColorRGB(1);
             disp([num2str(rgb(1)) ' ' num2str(rgb(2)) ' ' num2str(rgb(3))])
+            
         case 'x' % Press [X] to display whether the color detected is yellow or green based on RGB input.
             brick.SetColorMode(1,4);
             rgb = brick.ColorRGB(1);
@@ -57,13 +65,17 @@ while 1
             else
                 disp('The color detected is neither yellow nor green.')
             end
+            
         case 't' % Press [T] to display distance to right.
             disp(brick.UltrasonicDist(2));
+            
         case 'z' % Press [Z] to display angle relative to intial position.
             disp(brick.GyroAngle(3));
+            
         case 0 % Press no keys to stop the vehicle.
             brick.StopMotor('AD', 'Coast');
-        case 'q'
+            
+                    case 'q'
             break; % Press [Q] to exit the program.
     end
     
