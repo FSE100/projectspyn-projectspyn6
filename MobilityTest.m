@@ -1,5 +1,3 @@
-brick.GyroCalibrate(3);
-
 global key
 InitKeyboard();
 
@@ -7,12 +5,12 @@ while 1
     pause(0.1);
     switch key
         case 'w' % Hold [W] to move forwards.
-            brick.MoveMotor('A', -53);
-            brick.MoveMotor('D', -50);
+            brick.MoveMotor('A', -41);
+            brick.MoveMotor('D', -35);
             
         case 's' % Hold [S] to move backwards.
-            brick.MoveMotor('A', 50);
-            brick.MoveMotor('D', 55);
+            brick.MoveMotor('A', 35);
+            brick.MoveMotor('D', 37);
             
         case 'a' % Hold [A] to move right.
             brick.MoveMotor('A', -50);
@@ -70,7 +68,7 @@ while 1
             disp(brick.UltrasonicDist(2));
             
         case 'z' % Press [Z] to display angle relative to intial position.
-            disp(brick.GyroAngle(3));
+            disp(mod(brick.GyroAngle(3), 90));
             
         case 0 % Press no keys to stop the vehicle.
             brick.StopMotor('AD', 'Coast');

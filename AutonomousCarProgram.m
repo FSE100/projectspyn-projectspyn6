@@ -132,10 +132,6 @@ function navigateMaze(brick)
         moveForward(brick);
         pause(2); 
         
-    elseif brick.UltrasonicDist(2) >= 65 % Turn car right when a major distance to the right is detected.
-        turn90Right(brick);
-        moveForward(brick);
-        pause(2);
         
     elseif brick.UltrasonicDist(2) > 25.5 && brick.UltrasonicDist(2) < 65
         checkForStop(brick);
