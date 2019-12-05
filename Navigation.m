@@ -22,7 +22,7 @@ function navigateMaze(brick)
        
     if brick.TouchPressed(4) % Reverse the car for a bit and turn left when the front Touch Sensor is pressed.
         reverse(brick);
-        pause(1.2);
+        pause(2);
         turn90Left(brick);
         moveForward(brick);
         pause(1.3);
@@ -33,19 +33,22 @@ function navigateMaze(brick)
     elseif brick.UltrasonicDist(2) >= 65 % Turn car right when a major distance to the right is detected.
         turn90Right(brick);
         moveForward(brick);
-        pause(2); 
+        pause(3.5); 
         
     elseif brick.UltrasonicDist(2) >= 65 % Turn car right when a major distance to the right is detected.
         turn90Right(brick);
         moveForward(brick);
         pause(2);
-        
-    elseif brick.UltrasonicDist(2) > 25.5 && brick.UltrasonicDist(2) < 65
+    
+    %{
+    STRAIGHTENING METHODS
+    elseif brick.UltrasonicDist(2) > 27.5 && brick.UltrasonicDist(2) < 65
         checkForStop(brick);
         straightenRight(brick);
-    elseif brick.UltrasonicDist(2) < 13.5
+    elseif brick.UltrasonicDist(2) < 11.5
         checkForStop(brick);
         straightenLeft(brick);
+    %}
     end
 end
 
@@ -69,13 +72,13 @@ function lowerRamp(brick)
 end
 
 function moveForward(brick)
-    brick.MoveMotor('A', -54);
-    brick.MoveMotor('D', -50);
+    brick.MoveMotor('A', -38);
+    brick.MoveMotor('D', -35);
 end
 
 function reverse(brick)
-    brick.MoveMotor('A', 50);
-    brick.MoveMotor('D', 50);
+    brick.MoveMotor('A', 35);
+    brick.MoveMotor('D', 35);
 end
 
 function stop(brick)
@@ -124,7 +127,7 @@ end
 
 function turn90Right(brick)
     turnRight(brick);
-    pause(1.7);
+    pause(1.6);
     stop(brick);
 end
 

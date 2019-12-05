@@ -1,7 +1,7 @@
 %turn90Left(brick);
 %turn90Right(brick);
 %omplete180(brick);
-straightenRight(brick);
+%straightenRight(brick);
 stop(brick);
 %straightenRight(brick);
 

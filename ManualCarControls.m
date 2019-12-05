@@ -5,12 +5,12 @@ while 1
     pause(0.1);
     switch key
         case 'w' % Hold [W] to move forwards.
-            brick.MoveMotor('A', -54);
-            brick.MoveMotor('D', -50);
+            brick.MoveMotor('A', -38);
+            brick.MoveMotor('D', -35);
             
         case 's' % Hold [S] to move backwards.
-            brick.MoveMotor('A', 50);
-            brick.MoveMotor('D', 50);
+            brick.MoveMotor('A', 35);
+            brick.MoveMotor('D', 35);
             
         case 'a' % Hold [A] to move right.
             brick.MoveMotor('A', -50);

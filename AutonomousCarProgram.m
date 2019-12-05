@@ -119,7 +119,7 @@ function navigateMaze(brick)
        
     if brick.TouchPressed(4) % Reverse the car for a bit and turn left when the front Touch Sensor is pressed.
         reverse(brick);
-        pause(1.2);
+        pause(2);
         turn90Left(brick);
         moveForward(brick);
         pause(1.3);
@@ -166,13 +166,13 @@ function lowerRamp(brick)
 end
 
 function moveForward(brick)
-    brick.MoveMotor('A', -54);
-    brick.MoveMotor('D', -50);
+    brick.MoveMotor('A', -40);
+    brick.MoveMotor('D', -35);
 end
 
 function reverse(brick)
-    brick.MoveMotor('A', 50);
-    brick.MoveMotor('D', 50);
+    brick.MoveMotor('A', 35);
+    brick.MoveMotor('D', 35);
 end
 
 function stop(brick)
@@ -221,7 +221,7 @@ end
 
 function turn90Right(brick)
     turnRight(brick);
-    pause(1.7);
+    pause(1.9);
     stop(brick);
 end
 
