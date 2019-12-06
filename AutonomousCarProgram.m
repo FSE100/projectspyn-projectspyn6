@@ -138,7 +138,7 @@ function navigateMaze(brick)
     elseif brick.UltrasonicDist(2) >= 65 % Turn car right when a major distance to the right is detected.
         turn90Right(brick);
         redDetected = 0;
-        for i = 1:15
+        for i = 1:13
             if checkForStop(brick) == 1
                  redDetected = redDetected + 1;
             end
@@ -155,9 +155,6 @@ function navigateMaze(brick)
         straightenRight(brick);
     elseif brick.UltrasonicDist(2) < 12
         straightenLeft(brick);
-        
-        
-        
         
     end
 end
@@ -195,53 +192,60 @@ end
 function straightenLeft(brick)
     reverse(brick);
     pause(1.8);
-    stop(brick);
     rTime = 0;
-    while brick.UltrasonicDist(2) < 10
+    while brick.UltrasonicDist(2) < 19.8
         reverse(brick);
         pause(0.1);
         rTime = rTime + 1;
-        if rTime >= 30
+        if rTime >= 10
             break;
         end
-        moveForward(brick);
-        pause(1.5);
-        turnLeft(brick);
-        pause(1.5);
-        stop(brick);
-        break;
     end
-    %Normal  Straight
     turnLeft(brick);
     pause(0.4);
-    moveForward(brick);
-    pause(1.5);
+    stop(brick);
+    redDetected = 0;
+    for i = 1:4
+            if checkForStop(brick) == 1
+                 redDetected = redDetected + 1;
+            end
+            if redDetected == 1
+                stop(brick);
+                pause(2.5);
+            end
+            moveForward(brick);
+            pause(0.1);
+    end
     stop(brick);
 end
 
 function straightenRight(brick)
     reverse(brick);
-    pause(1);
-    stop(brick);
+    pause(1.8);
     rTime = 0;
-    while brick.UltrasonicDist(2) > 29.6 && brick.UltrasonicDist(2) < 65    %stuck part
+    while brick.UltrasonicDist(2) > 19.8 && brick.UltrasonicDist(2) < 65
         reverse(brick);
         pause(0.1);
-        rTime = rTime + 1;  %3 sec
-         if rTime >= 30
+        rTime = rTime + 1;
+        if rTime >= 10
             break;
-         end
-        moveForward(brick);
-        pause(1.5);
-        turnRight(brick);
-        pause(1.5);
-        stop(brick);
-        break;
+        end
     end
     turnRight(brick);
-    pause(0.2);
-    moveForward(brick);
-    pause(1.5);
+    pause(0.4);
+    stop(brick);
+    redDetected = 0;
+    for i = 1:4
+            if checkForStop(brick) == 1
+                 redDetected = redDetected + 1;
+            end
+            if redDetected == 1
+                stop(brick);
+                pause(2.5);
+            end
+            moveForward(brick);
+            pause(0.1);
+    end
     stop(brick);
 end
 
@@ -253,7 +257,7 @@ end
 
 function turn90Left(brick)
     turnLeft(brick);
-    pause(1.8);
+    pause(2);
     stop(brick);
 end
 
@@ -266,7 +270,7 @@ end
 
 function turn90Right(brick)
     turnRight(brick);
-    pause(1.9);
+    pause(1.7);
     stop(brick);
 end
 

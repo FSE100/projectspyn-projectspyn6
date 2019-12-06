@@ -58,9 +58,6 @@ function navigateMaze(brick)
     elseif brick.UltrasonicDist(2) < 12
         straightenLeft(brick);
         
-        
-        
-        
     end
 end
 
@@ -94,6 +91,98 @@ function stop(brick)
     brick.StopMotor('AD', 'Coast');
 end
 
+function straightenLeft(brick)
+    reverse(brick);
+    pause(1.8);
+    rTime = 0;
+    while brick.UltrasonicDist(2) < 19.8
+        reverse(brick);
+        pause(0.1);
+        rTime = rTime + 1;
+        if rTime >= 10
+            break;
+        end
+    end
+    turnLeft(brick);
+    pause(0.4);
+    stop(brick);
+    redDetected = 0;
+    for i = 1:4
+            if checkForStop(brick) == 1
+                 redDetected = redDetected + 1;
+            end
+            if redDetected == 1
+                stop(brick);
+                pause(2.5);
+            end
+            moveForward(brick);
+            pause(0.1);
+    end
+    stop(brick);
+end
+
+function straightenRight(brick)
+    reverse(brick);
+    pause(1.8);
+    rTime = 0;
+    while brick.UltrasonicDist(2) > 19.8 && brick.UltrasonicDist(2) < 65
+        reverse(brick);
+        pause(0.1);
+        rTime = rTime + 1;
+        if rTime >= 10
+            break;
+        end
+    end
+    turnRight(brick);
+    pause(0.4);
+    stop(brick);
+    redDetected = 0;
+    for i = 1:4
+            if checkForStop(brick) == 1
+                 redDetected = redDetected + 1;
+            end
+            if redDetected == 1
+                stop(brick);
+                pause(2.5);
+            end
+            moveForward(brick);
+            pause(0.1);
+    end
+    stop(brick);
+end
+
+function deadEndTurn(brick)
+    reverse(brick);
+    pause(1.3);
+    turn90Left(brick);
+end
+
+function turn90Left(brick)
+    turnLeft(brick);
+    pause(2);
+    stop(brick);
+end
+
+
+function turnLeft(brick)
+    brick.MoveMotor('A', -45);
+    brick.MoveMotor('D', 0);
+end
+
+
+function turn90Right(brick)
+    turnRight(brick);
+    pause(1.7);
+    stop(brick);
+end
+
+
+function turnRight(brick)
+    brick.MoveMotor('D', -45);
+    brick.MoveMotor('A', 0);
+end
+
+%GENE
 %{
 function straightenLeft(brick)
     reverse(brick);
@@ -147,6 +236,8 @@ function straightenRight(brick)
 end
 %}
 
+%CRIS
+%{
 function straightenLeft(brick)
     reverse(brick);
     pause(1.8);
@@ -200,34 +291,4 @@ function straightenRight(brick)
         stop(brick);
     end
 end
-
-function deadEndTurn(brick)
-    reverse(brick);
-    pause(1.3);
-    turn90Left(brick);
-end
-
-function turn90Left(brick)
-    turnLeft(brick);
-    pause(1.8);
-    stop(brick);
-end
-
-
-function turnLeft(brick)
-    brick.MoveMotor('A', -45);
-    brick.MoveMotor('D', 0);
-end
-
-
-function turn90Right(brick)
-    turnRight(brick);
-    pause(1.9);
-    stop(brick);
-end
-
-
-function turnRight(brick)
-    brick.MoveMotor('D', -45);
-    brick.MoveMotor('A', 0);
-end
+%}
