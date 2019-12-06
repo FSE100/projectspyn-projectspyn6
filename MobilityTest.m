@@ -1,3 +1,5 @@
+% A program for manual control and sensor testing.
+
 global key
 InitKeyboard();
 

@@ -1,5 +1,7 @@
-brick.ResetMotorAngle('C'); % Resets  medium motor angle to properly lower 
-                            % and raise ramp.
+% The autonomous program for the car.
+
+% Resets  medium motor angle to properly lower and raise ramp.
+brick.ResetMotorAngle('C');
 
 global key
 InitKeyboard();
@@ -22,7 +24,8 @@ while isGreen(brick) == 0
 end
 
 % Once the color Green is detected, the car switches to manual control
-% mode so the user is able to pick up the passenger.
+% mode so the user is able to pick up the passenger. Press [Q] to resume
+% autonomous behavior.
 manualControls(brick);
 CloseKeyboard();
 InitKeyboard();
@@ -45,8 +48,8 @@ end
 
 % Once the color Yellow is detected, the car lowers its ramp and moves
 % forward to drop off the passenger.
-
 yellowAction(brick);
+
 % End of program.
 
 
@@ -208,6 +211,8 @@ end
 
 % Reverses vehicle until the Ultrasonic Sensor is at a comfortable distance
 % from the right wall or 2.8 seconds pass. Then, the car turns left a bit
+% and moves forward for 0.4 seconds whilst checking for the color red to
+% stop.
 function straightenLeft(brick)
     reverse(brick);
     pause(1.8);
@@ -238,6 +243,10 @@ function straightenLeft(brick)
     stop(brick);
 end
 
+% Reverses vehicle until the Ultrasonic Sensor is at a comfortable distance
+% from the left wall or 2.8 seconds pass. Then, the car turns right a bit
+% and moves forward for 0.4 seconds whilst checking for the color red to
+% stop.
 function straightenRight(brick)
     reverse(brick);
     pause(1.8);
