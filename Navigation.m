@@ -151,12 +151,12 @@ function straightenLeft(brick)
     reverse(brick);
     pause(1.8);
     if brick.TouchPressed(3)
+        stop(brick);
         moveForward(brick);
         pause(1.5);
         turnLeft(brick);
         pause(0.4);
     else
-        stop(brick);
         rTime = 0;
         while brick.UltrasonicDist(2) < 10
             reverse(brick);
@@ -178,12 +178,12 @@ function straightenRight(brick)
     reverse(brick);
     pause(1.8);
     if brick.TouchPressed(3)
+        stop(brick);
         moveForward(brick);
         pause(1.5);
         turnRight(brick);
         pause(0.4);
     else
-        stop(brick);
         rTime = 0;
         while brick.UltrasonicDist(2) < 10
             reverse(brick);
