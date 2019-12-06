@@ -1,5 +1,5 @@
-%turn90Left(brick);
-turn90Right(brick);
+turn90Left(brick);
+%turn90Right(brick);
 %complete180(brick);
 %straightenRight(brick);
 stop(brick);
@@ -16,7 +16,7 @@ end
 
 function turn90Left(brick)
     turnLeft(brick);
-    pause(2.6);
+    pause(1.7);
     stop(brick);
 end
 
@@ -29,7 +29,7 @@ end
 
 function turn90Right(brick)
     turnRight(brick);
-    pause(2.15);
+    pause(1.61);
     stop(brick);
 end
 
