@@ -1,5 +1,3 @@
-brick.SetColorMode(1,2); % Color sensor shall return basic colors.
-
 global key
 InitKeyboard();
 
@@ -62,6 +60,7 @@ function navigateMaze(brick)
 end
 
 function result = checkForStop(brick)
+    brick.SetColorMode(1,2);
     if brick.ColorCode(1) == 5
         result = 1;
     else
@@ -172,7 +171,7 @@ end
 
 function turn90Right(brick)
     turnRight(brick);
-    pause(1.7);
+    pause(2.2);
     stop(brick);
 end
 

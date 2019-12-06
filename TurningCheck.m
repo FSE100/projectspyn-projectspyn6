@@ -1,8 +1,9 @@
-turn90Left(brick);
+%turn90Left(brick);
 %turn90Right(brick);
 %complete180(brick);
-%straightenRight(brick);
-stop(brick);
+%straightenLeft(brick);
+% straightenRight(brick);
+% stop(brick);
 %straightenRight(brick);
 
 function moveForward(brick)
